@@ -1,3 +1,7 @@
+/**
+ * This class represents a calculator of dates.
+ *
+ */
 public class DateCalculator {
     //Defines
     private static int JANUARY = 1;
@@ -12,10 +16,15 @@ public class DateCalculator {
     private static int OCTOBER = 10;
     private static int NOVEMBER = 11;
     private static int DECEMBER = 12;
+    private static int YEAR = 365;
+    private static int LEAP_YEAR = 366;
 
-
-
-
+    /**
+     * This method gets a date and a number and calculates the new date according to the number.
+     * @param date - An object of Date type.
+     * @param num - Number of days to be added to or subtracted from the given date.
+     * @return - The new calculated date.
+     */
     public static Date addToDate(Date date, int num) {
         int dateDay = date.getDay();
         int dateMonth = date.getMonth();
@@ -29,22 +38,23 @@ public class DateCalculator {
             maxDayOfMonth = getMaxDayOfMonth(dateMonth, isLeapYear(dateYear)); //Get the max days of current month.
 
 
-            if(num >= 365){
+            if(num >= YEAR){
                 if (dateMonth > FEBRUARY) { //We passed February.
                     if (isLeapYear(dateYear+1)) {
-                        return addToDate(new Date(dateDay, dateMonth, dateYear + 1), num - 366); //We passed
-                                                                                        // February and it's a leap year
+                        return addToDate(new Date(dateDay, dateMonth, dateYear + 1), num - LEAP_YEAR);
+                        //We passed February and it's a leap year
+
                     } else {
-                        return addToDate(new Date(dateDay, dateMonth, dateYear + 1), num - 365); //We passed
+                        return addToDate(new Date(dateDay, dateMonth, dateYear + 1), num - YEAR); //We passed
                                                                                         // February and not a leap year
                     }
                 }
                 else if (dateMonth <= FEBRUARY){
                     if (isLeapYear(dateYear)) {
-                        return addToDate(new Date(dateDay, dateMonth, dateYear + 1), num - 366);}
+                        return addToDate(new Date(dateDay, dateMonth, dateYear + 1), num - LEAP_YEAR);}
                     }
                 else{
-                    return addToDate(new Date(dateDay, dateMonth, dateYear + 1), num - 365);
+                    return addToDate(new Date(dateDay, dateMonth, dateYear + 1), num - YEAR);
                 }
             }
             if ((dateDay + 1) > maxDayOfMonth) {
@@ -63,22 +73,22 @@ public class DateCalculator {
         else {
 
 
-            if(num <= -365){
+            if(num <= -YEAR){
                 if (dateMonth >= FEBRUARY) { //We passed February.
                     if (isLeapYear(dateYear)) {
-                        return addToDate(new Date(dateDay, dateMonth, dateYear - 1), num + 366); //We passed
-                        // February and it's a leap year
+                        return addToDate(new Date(dateDay, dateMonth, dateYear - 1), num + LEAP_YEAR);
+                        //We passed February and it's a leap year
                     } else {
-                        return addToDate(new Date(dateDay, dateMonth, dateYear - 1), num + 365); //We passed
-                        // February and not a leap year
+                        return addToDate(new Date(dateDay, dateMonth, dateYear - 1), num + YEAR);
+                        //We passed February and not a leap year
                     }
                 }
                 else if (dateMonth < FEBRUARY){
                     if (isLeapYear(dateYear-1)) {
-                        return addToDate(new Date(dateDay, dateMonth, dateYear - 1), num + 366);}
+                        return addToDate(new Date(dateDay, dateMonth, dateYear - 1), num + LEAP_YEAR);}
                 }
                 else{
-                    return addToDate(new Date(dateDay, dateMonth, dateYear - 1), num + 365);
+                    return addToDate(new Date(dateDay, dateMonth, dateYear - 1), num + YEAR);
                 }
             }
 
@@ -89,7 +99,8 @@ public class DateCalculator {
                     dateDay = 31;
                 }
                 else {
-                    maxDayOfMonth = getMaxDayOfMonth(dateMonth - 1, isLeapYear(dateYear)); //Get the max days of last month.
+                    maxDayOfMonth = getMaxDayOfMonth(dateMonth - 1, isLeapYear(dateYear));
+                    //Get the max days of last month.
                     dateDay = maxDayOfMonth;
                     dateMonth -= 1;
                 }

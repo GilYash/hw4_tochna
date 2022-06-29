@@ -46,7 +46,7 @@ public class Main {
             System.out.println("Level with most occurrences of 2: " + LevelMostOccurrences.getLevelWithMostOccurrences(root, 2));
         System.out.println();
     }
-    /**
+
      private static void testPartB() {
          System.out.println("Testing part B...");
          for (int i = 0; i < 100; i++) {
@@ -95,10 +95,10 @@ public class Main {
          } else {
              System.out.println("You should not reach here!");
          }
-     }*/
+     }
 }
 
-/**
+
 class Counter {
     public static int count = 0;
 }
@@ -113,7 +113,7 @@ abstract class Worker implements Runnable {
     protected abstract void lockAndIncrement();
 
     @Override
-    public void run() {
+    public void () {
         for (int i = 0; i < 100000; i++) {
             lockAndIncrement();
             if (i % 100 == 0) {
@@ -157,5 +157,5 @@ class TryWithResourcesAcquireWorker extends Worker {
             }
         }
     }
-}*/
+}
 
