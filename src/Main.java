@@ -1,7 +1,7 @@
 public class Main {
     public static void main(String[] args) {
         testPartA();
-        //testPartB();
+        testPartB();
     }
 
     private static void testPartA() {
@@ -43,59 +43,59 @@ public class Main {
         System.out.println("Level with most occurrences of 7: " + LevelMostOccurrences.getLevelWithMostOccurrences(root, 7));
         System.out.println("Level with most occurrences of 5: " + LevelMostOccurrences.getLevelWithMostOccurrences(root, 5));
         System.out.println("Level with most occurrences of 6: " + LevelMostOccurrences.getLevelWithMostOccurrences(root, 6));
-            System.out.println("Level with most occurrences of 2: " + LevelMostOccurrences.getLevelWithMostOccurrences(root, 2));
+        System.out.println("Level with most occurrences of 2: " + LevelMostOccurrences.getLevelWithMostOccurrences(root, 2));
         System.out.println();
     }
 
-     private static void testPartB() {
-         System.out.println("Testing part B...");
-         for (int i = 0; i < 100; i++) {
-             Counter.count = 0;
-             MyReentrantLock myLock = new MyReentrantLock();
-             Thread t1 = new Thread(new OneAcquireWorker(myLock));
-             t1.start();
-             Thread t2 = new Thread(new TryWithResourcesAcquireWorker(myLock));
-             t2.start();
+    private static void testPartB() {
+        System.out.println("Testing part B...");
+        for (int i = 0; i < 100; i++) {
+            Counter.count = 0;
+            MyReentrantLock myLock = new MyReentrantLock();
+            Thread t1 = new Thread(new OneAcquireWorker(myLock));
+            t1.start();
+            Thread t2 = new Thread(new TryWithResourcesAcquireWorker(myLock));
+            t2.start();
 
-             // Wait for the completion of the workers
-             try {
-                 t1.join();
-                 t2.join();
-             } catch (InterruptedException e) {
-                 e.printStackTrace();
-             }
+            // Wait for the completion of the workers
+            try {
+                t1.join();
+                t2.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
-             System.out.println("Iteration " + (i + 1) + ", Counter = " + Counter.count);
-         }
+            System.out.println("Iteration " + (i + 1) + ", Counter = " + Counter.count);
+        }
 
-         try {
-             Lock lock = new MyReentrantLock();
-             lock.release();
-         } catch (IllegalReleaseAttempt e) {
-             System.out.println("Cannot release the lock!");
-         }
+        try {
+            Lock lock = new MyReentrantLock();
+            lock.release();
+        } catch (IllegalReleaseAttempt e) {
+            System.out.println("Cannot release the lock!");
+        }
 
-         try {
-             Lock lock = new MyReentrantLock();
-             lock.release();
-         } catch (IllegalMonitorStateException e) {
-             System.out.println("Cannot release the lock!");
-         }
+        try {
+            Lock lock = new MyReentrantLock();
+            lock.release();
+        } catch (IllegalMonitorStateException e) {
+            System.out.println("Cannot release the lock!");
+        }
 
-         try (MyReentrantLock lock = new MyReentrantLock()) {
-         } catch (IllegalReleaseAttempt e) {
-             System.out.println("Cannot release the lock!");
-         }
+        try (MyReentrantLock lock = new MyReentrantLock()) {
+        } catch (IllegalReleaseAttempt e) {
+            System.out.println("Cannot release the lock!");
+        }
 
-         Lock lock = new MyReentrantLock();
-         boolean result = lock.tryAcquire();
-         if (result) {
-             System.out.println("Locked the lock, now releasing it.");
-             lock.release();
-         } else {
-             System.out.println("You should not reach here!");
-         }
-     }
+        Lock lock = new MyReentrantLock();
+        boolean result = lock.tryAcquire();
+        if (result) {
+            System.out.println("Locked the lock, now releasing it.");
+            lock.release();
+        } else {
+            System.out.println("You should not reach here!");
+        }
+    }
 }
 
 
@@ -113,7 +113,7 @@ abstract class Worker implements Runnable {
     protected abstract void lockAndIncrement();
 
     @Override
-    public void () {
+    public void run() {
         for (int i = 0; i < 100000; i++) {
             lockAndIncrement();
             if (i % 100 == 0) {
@@ -158,4 +158,3 @@ class TryWithResourcesAcquireWorker extends Worker {
         }
     }
 }
-

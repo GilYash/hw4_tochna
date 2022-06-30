@@ -1,6 +1,5 @@
 /**
- * This class represents a calculator of dates.
- *
+ * This class represents a calculator which generates new dates.
  */
 public class DateCalculator {
     //Defines
@@ -114,7 +113,12 @@ public class DateCalculator {
 
     }
 
-
+    /**
+     * This method calculates the maximal day a date can get in a given month.
+     * @param month - The current month.
+     * @param leapYear - A boolean parameter indicating if the current year is a leap year or not.
+     * @return - The value of the last day of the current month.
+     */
     public static int getMaxDayOfMonth(int month, boolean leapYear) {
         int maxDayOfMonth=0;
         //Categorizing the months
@@ -134,6 +138,12 @@ public class DateCalculator {
         }
         return maxDayOfMonth;
     }
+
+    /**
+     * This method calculates if a given year is a leap year or not.
+     * @param year - The current year.
+     * @return - True if the input year is a leap year and False otherwise.
+     */
     public static boolean isLeapYear(int year) {
         boolean leapYear;
 
